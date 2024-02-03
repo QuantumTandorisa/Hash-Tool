@@ -25,12 +25,12 @@
 #
 #######################################################
 
+import sys
 import os
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from main import encrypt_and_split, decrypt_and_recover
 
 def derive_key(password, salt):
     kdf = PBKDF2HMAC(
@@ -56,18 +56,21 @@ def encrypt_and_split(file_path, password):
         salt = os.urandom(16)
         key = derive_key(password, salt)
 
+        # Generate a random IV / Generar un IV aleatorio
+        iv = os.urandom(16)
+
         # Encrypt and authenticate file contents using AES-GCM / Cifrar y autenticar el contenido del archivo utilizando AES-GCM
-        cipher = Cipher(algorithms.AES(key), modes.GCM())
+        cipher = Cipher(algorithms.AES(key), modes.GCM(iv), backend=default_backend())
         encryptor = cipher.encryptor()
         encrypted_content = encryptor.update(file_content) + encryptor.finalize()
         tag = encryptor.tag
 
         # Save encrypted content in two separate files / Guardar el contenido cifrado en dos archivos separados
         with open(file_path + ".part1", 'wb') as part1_file:
-            part1_file.write(salt + tag + encrypted_content[:len(encrypted_content) // 2])
+            part1_file.write(salt + tag + iv + encrypted_content[:len(encrypted_content) // 2])
 
         with open(file_path + ".part2", 'wb') as part2_file:
-            part2_file.write(salt + tag + encrypted_content[len(encrypted_content) // 2:])
+            part2_file.write(salt + tag + iv + encrypted_content[len(encrypted_content) // 2:])
 
         # Delete the original file / Eliminar el archivo original
         os.remove(file_path)
@@ -106,9 +109,21 @@ def decrypt_and_recover(file_path, password):
     except Exception as e:
         print("Error al recuperar el archivo:", str(e))
 
-# Example of use / Ejemplo de uso
-file_path = "ruta/al/archivo.txt"
-password = "password"
+def main():
+    if len(sys.argv) != 4:
+        print("Uso: python3 HashTool.py <archivo> <contraseña> <operación>")
+        return
 
-encrypt_and_split(file_path, password)
-decrypt_and_recover(file_path, password)
+    file_path = sys.argv[1]
+    password = sys.argv[2]
+    operation = sys.argv[3]
+
+    if operation == "encrypt_and_split":
+        encrypt_and_split(file_path, password)
+    elif operation == "decrypt_and_recover":
+        decrypt_and_recover(file_path, password)
+    else:
+        print("Operación no válida. Use 'encrypt_and_split' o 'decrypt_and_recover'.")
+
+if __name__ == "__main__":
+    main()
