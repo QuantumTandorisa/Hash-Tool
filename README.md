@@ -1,4 +1,4 @@
-Hash-Tool es una aplicación avanzada diseñada para proporcionar seguridad adicional a tus archivos al cifrar y dividir su contenido utilizando el algoritmo AES-GCM. Esta herramienta ofrece funciones de cifrado robustas y un proceso de división que requiere ambas partes cifradas y una contraseña secreta para la recuperación del archivo original.
+Hash Tool es una aplicación avanzada diseñada para proporcionar seguridad adicional a tus archivos al cifrar y dividir su contenido utilizando el algoritmo AES-GCM. Esta herramienta ofrece funciones de cifrado robustas y un proceso de división que requiere ambas partes cifradas y una contraseña secreta para la recuperación del archivo original.
 
 ## Características Principales
 
