@@ -1,4 +1,4 @@
-Hash Tool es una aplicación avanzada diseñada para proporcionar seguridad adicional a tus archivos al cifrar y dividir su contenido utilizando el algoritmo AES-GCM. Esta herramienta ofrece funciones de cifrado robustas y un proceso de división que requiere ambas partes cifradas y una contraseña secreta para la recuperación del archivo original.
+HashTool es una aplicación avanzada diseñada para proporcionar seguridad adicional a tus archivos al cifrar y dividir su contenido utilizando el algoritmo AES-GCM. Esta herramienta ofrece funciones de cifrado robustas y un proceso de división que requiere ambas partes cifradas y una contraseña secreta para la recuperación del archivo original.
 
 ## Características Principales
 
@@ -19,24 +19,14 @@ Antes de utilizar esta herramienta, asegúrate de tener instalados los siguiente
 
 - Clona este repositorio en tu sistema.
 - Cifra el contenido del archivo, divide el hash cifrado y elimina el archivo original.
-    ```python
-    file_path = "ruta/al/archivo.txt"
-    password = "tu_contraseña_secreta"
-    encrypt_and_split(file_path, password)
-    ```
   ```python
-    python3 Hash-Tool.py "~/Documents/file.txt" "password" encrypt_and_split
+    python3 HashTool.py "/Home/user/Documents/file.txt" "password" encrypt_and_split
     ```
-    
 - Recupera el archivo original utilizando las dos partes del hash cifrado y la contraseña secreta.
-    ```python
-    file_path = "ruta/al/archivo.txt"
-    password = "tu_contraseña_secreta"
-    decrypt_and_recover(file_path, password)
-    ```
   ```python
-    python3 Hash-Tool.py "~/Documents/file.txt" "password" decrypt_and_recover
+    python3 HashTool.py "/Home/user/Documents/file.txt" "password" decrypt_and_recover
     ```
+  
 ## Configuración
 
 Es importante señalar que el diseño y la implementación de esta herramienta se han abordado desde una perspectiva ética y con el propósito de proporcionar seguridad y privacidad legítimas. Sin embargo, la responsabilidad de su uso recae en el usuario final.
