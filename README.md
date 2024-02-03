@@ -24,13 +24,19 @@ Antes de utilizar esta herramienta, asegúrate de tener instalados los siguiente
     password = "tu_contraseña_secreta"
     encrypt_and_split(file_path, password)
     ```
+  ```python
+    python3 Hash-Tool.py "~/Documents/file.txt" "password" encrypt_and_split
+    ```
+    
 - Recupera el archivo original utilizando las dos partes del hash cifrado y la contraseña secreta.
     ```python
     file_path = "ruta/al/archivo.txt"
     password = "tu_contraseña_secreta"
     decrypt_and_recover(file_path, password)
     ```
-
+  ```python
+    python3 Hash-Tool.py "~/Documents/file.txt" "password" decrypt_and_recover
+    ```
 ## Configuración
 
 Es importante señalar que el diseño y la implementación de esta herramienta se han abordado desde una perspectiva ética y con el propósito de proporcionar seguridad y privacidad legítimas. Sin embargo, la responsabilidad de su uso recae en el usuario final.
