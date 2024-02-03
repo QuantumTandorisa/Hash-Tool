@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 '''
-    __  __           __        ______            __
-   / / / /___ ______/ /_      /_  __/___  ____  / /
-  / /_/ / __ `/ ___/ __ \______/ / / __ \/ __ \/ / 
- / __  / /_/ (__  ) / / /_____/ / / /_/ / /_/ / /  
-/_/ /_/\__,_/____/_/ /_/     /_/  \____/\____/_/   
+    __  __           __    ______            __
+   / / / /___ ______/ /_  /_  __/___  ____  / /
+  / /_/ / __ `/ ___/ __ \  / / / __ \/ __ \/ / 
+ / __  / /_/ (__  ) / / / / / / /_/ / /_/ / /  
+/_/ /_/\__,_/____/_/ /_/ /_/  \____/\____/_/   
                                                    
 '''
 #######################################################
-#    Hash-Tool.py
+#    HashTool.py
 #
-# Hash-Tool is an advanced application designed to 
+# HashTool is an advanced application designed to 
 # provide additional security to your files by encrypting
 # and splitting their contents using the AES-GCM 
 # algorithm. This tool offers robust encryption features 
