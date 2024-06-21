@@ -57,7 +57,7 @@ def encrypt_and_split(file_path, password):
         key = derive_key(password, salt)
 
         # Generate a random IV / Generar un IV aleatorio
-        iv = os.urandom(16)
+        iv = os.urandom(12)  # GCM usualmente usa un IV de 12 bytes
 
         # Encrypt and authenticate file contents using AES-GCM / Cifrar y autenticar el contenido del archivo utilizando AES-GCM
         cipher = Cipher(algorithms.AES(key), modes.GCM(iv), backend=default_backend())
@@ -66,11 +66,12 @@ def encrypt_and_split(file_path, password):
         tag = encryptor.tag
 
         # Save encrypted content in two separate files / Guardar el contenido cifrado en dos archivos separados
+        half = len(encrypted_content) // 2
         with open(file_path + ".part1", 'wb') as part1_file:
-            part1_file.write(salt + tag + iv + encrypted_content[:len(encrypted_content) // 2])
+            part1_file.write(salt + iv + tag + encrypted_content[:half])
 
         with open(file_path + ".part2", 'wb') as part2_file:
-            part2_file.write(salt + tag + iv + encrypted_content[len(encrypted_content) // 2:])
+            part2_file.write(salt + iv + tag + encrypted_content[half:])
 
         # Delete the original file / Eliminar el archivo original
         os.remove(file_path)
@@ -88,16 +89,17 @@ def decrypt_and_recover(file_path, password):
         with open(file_path + ".part2", 'rb') as part2_file:
             part2_data = part2_file.read()
 
-        # Extract the salt, authentication tag and encrypted content from both sides. / Extraer la sal, la etiqueta de autenticación y el contenido cifrado de ambas partes
+        # Extract the salt, IV, authentication tag, and encrypted content / Extraer la sal, el IV, la etiqueta de autenticación y el contenido cifrado
         salt = part1_data[:16]
-        tag = part1_data[16:32]
-        encrypted_content = part1_data[32:] + part2_data
+        iv = part1_data[16:28]
+        tag = part1_data[28:44]
+        encrypted_content = part1_data[44:] + part2_data[44:]
 
         # Deriving the encryption key from the password and salt / Derivar la clave de cifrado a partir de la contraseña y la sal
         key = derive_key(password, salt)
 
         # Verify and decrypt content using AES-GCM / Verificar y descifrar el contenido utilizando AES-GCM
-        cipher = Cipher(algorithms.AES(key), modes.GCM(tag), backend=default_backend())
+        cipher = Cipher(algorithms.AES(key), modes.GCM(iv, tag), backend=default_backend())
         decryptor = cipher.decryptor()
         decrypted_content = decryptor.update(encrypted_content) + decryptor.finalize()
 
